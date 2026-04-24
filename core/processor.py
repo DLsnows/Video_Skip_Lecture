@@ -21,7 +21,6 @@ parent_dir = Path(__file__).parent.parent
 sys.path.append(str(parent_dir))
 
 from config.config_manager import config_manager
-config_manager.config_file=os.path.join(parent_dir,"config.json")
 # Initialize global progress tracker
 from utils.progress_tracker import progress_tracker
 # processor.py 中 process_videos 开头
@@ -32,6 +31,14 @@ def chunk_list(lst, size):
     for i in range(0, len(lst), size):
         result_list.append(lst[i:i+size])
     return result_list
+
+def get_ffmpeg_path() -> str:
+    """Get the path to ffmpeg executable, works for both dev and PyInstaller."""
+    if getattr(sys, '_MEIPASS', False):
+        ffmpeg_path = os.path.join(sys._MEIPASS, "ffmpeg.exe")
+        if os.path.exists(ffmpeg_path):
+            return ffmpeg_path
+    return "ffmpeg"
 
 def deepseek(client, role, prompt, content):
     """Call DeepSeek API"""
@@ -501,7 +508,7 @@ def process_single_video(video_path: str, task_id: str, input_folder: str, outpu
 
             # Use ffmpeg to convert video to audio
             cmd = [
-                "ffmpeg",
+                get_ffmpeg_path(),
                 "-i", os.path.normpath(video_path),
                 "-vn",
                 "-acodec", "libmp3lame",
@@ -511,7 +518,7 @@ def process_single_video(video_path: str, task_id: str, input_folder: str, outpu
             ]
 
             try:
-                result = subprocess.run(cmd, check=True, capture_output=True, text=True, timeout=1800)  # 30 minute timeout
+                result = subprocess.run(cmd, check=True, capture_output=True, text=True, timeout=1800)
                 progress_tracker.add_log(task_id, "info", f"Successfully extracted audio: {video_name}")
 
                 progress_tracker.update_task_progress(
@@ -612,12 +619,12 @@ def makeaudio_multithread(input_dir, task_id: str, max_workers=4):
     def convert_one(input_path, output_path):
         """Convert a single file"""
         cmd = [
-            "ffmpeg",
+            get_ffmpeg_path(),
             "-i", input_path,
             "-vn",
             "-acodec", "libmp3lame",
             "-b:a", "192k",
-            "-y",  # Overwrite output files automatically
+            "-y",
             output_path
         ]
         try:
@@ -947,7 +954,7 @@ def process_videos(task_id: str, input_folder: str, output_folder: str, video_la
                     # Use ffmpeg to convert video to audio
                     # Normalize the paths for the subprocess call
                     cmd = [
-                        "ffmpeg",
+                        get_ffmpeg_path(),
                         "-i", os.path.normpath(video_path),
                         "-vn",
                         "-acodec", "libmp3lame",
@@ -956,7 +963,6 @@ def process_videos(task_id: str, input_folder: str, output_folder: str, video_la
                         os.path.normpath(audio_path)
                     ]
 
-                    # Start the subprocess and monitor progress
                     try:
                         progress_tracker.update_task_progress(
                             task_id,
@@ -965,8 +971,7 @@ def process_videos(task_id: str, input_folder: str, output_folder: str, video_la
                             0
                         )
 
-                        # Run FFmpeg and monitor progress
-                        result = subprocess.run(cmd, check=True, capture_output=True, text=True, timeout=1800)  # 30 minute timeout
+                        result = subprocess.run(cmd, check=True, capture_output=True, text=True, timeout=1800)
                         progress_tracker.add_log(task_id, "info", f"Successfully extracted audio: {video_name}")
 
                         progress_tracker.update_task_progress(

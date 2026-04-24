@@ -4,10 +4,31 @@
       "Bash(chmod +x start.sh)",
       "Bash(python main.py)",
       "Bash(python -c \"import sys; print\\('Server ready to run'\\)\")",
-      "Bash(python test_multi_video_fixed.py)"
+      "Bash(python test_multi_video_fixed.py)",
+      "Bash(pip list *)",
+      "Bash(pyinstaller video_processor_folder.spec)",
+      "Bash(where ffmpeg *)",
+      "Bash(pip show *)",
+      "Bash(python -m PyInstaller video_skip_lecture.spec --clean)",
+      "Bash(timeout 6 \"c:/Users/wang/vsCode/video_skip_lecture ready/dist/video_skip_lecture/video_skip_lecture.exe\")",
+      "Bash(cmd.exe /c \"start /B video_skip_lecture.exe > C:\\\\Users\\\\wang\\\\output.log 2>&1\")",
+      "Bash(./video_skip_lecture.exe)",
+      "Bash(curl -s http://127.0.0.1:8001/health)",
+      "Bash(curl -s http://127.0.0.1:8002/health)",
+      "Bash(curl -s http://127.0.0.1:8001/)",
+      "Bash(curl -s http://127.0.0.1:8002/)",
+      "Bash(curl -s http://127.0.0.1:8001/api/v1/settings)",
+      "Bash(curl -s http://127.0.0.1:8002/api/v1/settings)",
+      "Bash(python -m PyInstaller video_skip_lecture.spec)",
+      "Bash(taskkill //F //IM video_skip_lecture.exe)",
+      "Bash(rm -rf dist build)",
+      "Bash(curl -s -X PUT http://127.0.0.1:8001/api/v1/settings -H \"Content-Type: application/json\" -d '{\"transcription_provider\":{\"base_url\":\"https://test.example.com\",\"api_key\":\"test-key-123\",\"model\":\"test-model\"}}')",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['transcription_provider'], indent=2\\)\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['transcription_provider'], indent=2\\)\\)\" echo \"\")"
     ],
     "additionalDirectories": [
-      "c:\\Users\\wang\\.claude\\plans"
+      "c:\\Users\\wang\\.claude\\plans",
+      "c:\\Program Files\\ffmpeg\\bin"
     ]
   }
 }

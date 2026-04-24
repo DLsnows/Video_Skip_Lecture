@@ -1,10 +1,11 @@
 import json
 import os
+import sys
 from typing import Dict, Any, Optional
 
 class ConfigManager:
-    def __init__(self, config_file: str = "config.json"):
-        self.config_file = config_file
+    def __init__(self, config_file: str = None):
+        self.config_file = config_file or self._get_default_config_path()
         self.default_config = {
             "transcription_provider": {
                 "base_url": "",
@@ -26,6 +27,17 @@ class ConfigManager:
                 "default_output": ""
             }
         }
+
+    @staticmethod
+    def _get_default_config_path() -> str:
+        """Get the config file path suitable for the current runtime mode.
+
+        - PyInstaller (sys._MEIPASS exists): save alongside the exe for persistence
+        - Dev mode: save in the current working directory
+        """
+        if getattr(sys, '_MEIPASS', False):
+            return os.path.join(os.path.dirname(sys.executable), "config.json")
+        return os.path.abspath("config.json")
 
     def load_config(self) -> Dict[str, Any]:
         """Load configuration from file"""

@@ -1,19 +1,14 @@
-import os
-from pathlib import Path
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 from typing import Optional, List
 import asyncio
 import uuid
-from datetime import datetime
 import threading
 import traceback
 
 from utils.progress_tracker import progress_tracker
 from core.processor import process_videos
 from config.config_manager import config_manager
-parent_dir = Path(__file__).parent.parent
-config_manager.config_file=os.path.join(parent_dir,"config.json")
 router = APIRouter()
 # routes.py 中 wrapped_process_videos 开头
 
