@@ -47,10 +47,6 @@ pip install -r requirements1.txt
     "base_url": "https://api.deepseek.com",
     "api_key": "your-summarization-api-key",
     "model": "deepseek-reasoner"
-  },
-  "folders": {
-    "default_input": "/path/to/default/input/folder",
-    "default_output": "/path/to/default/output/folder"
   }
 }
 ```
