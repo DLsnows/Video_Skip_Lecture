@@ -164,6 +164,11 @@ async def websocket_progress(websocket: WebSocket, task_id: str):
     except WebSocketDisconnect:
         pass
 
+@router.get("/tasks")
+async def list_tasks():
+    """Return all tasks currently tracked by the progress tracker"""
+    return progress_tracker.get_all_tasks()
+
 @router.get("/settings")
 async def get_settings():
     """获取当前设置"""

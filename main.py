@@ -68,14 +68,28 @@ def read_root():
 def health_check():
     return {"status": "healthy", "message": "API is running"}
 
-if __name__ == "__main__":
-    def open_browser():
-        # Wait a bit for the server to start
-        time.sleep(2)
-        webbrowser.open("http://127.0.0.1:8001")
+import socket
 
-    # Start the browser opening in a separate thread
+def find_available_port(start_port=8001, max_attempts=100):
+    """从 start_port 开始查找可用端口"""
+    for port in range(start_port, start_port + max_attempts):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            try:
+                s.bind(("127.0.0.1", port))
+                return port
+            except OSError:
+                continue
+    raise RuntimeError(f"无法找到可用端口（从 {start_port} 开始尝试 {max_attempts} 个）")
+
+if __name__ == "__main__":
+    port = find_available_port()
+
+    def open_browser():
+        time.sleep(2)
+        webbrowser.open(f"http://127.0.0.1:{port}")
+
     browser_thread = threading.Thread(target=open_browser)
     browser_thread.start()
 
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    print(f"服务器启动于 http://127.0.0.1:{port}")
+    uvicorn.run(app, host="127.0.0.1", port=port)

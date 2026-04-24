@@ -81,6 +81,11 @@ class ProgressTracker:
             return status
         return {}
 
+    def get_all_tasks(self) -> Dict[str, Dict[str, Any]]:
+        """Return a snapshot of all currently tracked tasks"""
+        with self.lock:
+            return {tid: dict(data) for tid, data in self.tasks.items()}
+
     def cleanup_task(self, task_id: str):
         """从跟踪器中移除任务"""
         with self.lock:

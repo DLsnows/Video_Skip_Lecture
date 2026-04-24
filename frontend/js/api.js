@@ -42,6 +42,11 @@ class APIClient {
     });
   }
 
+  // 获取所有任务
+  async getAllTasks() {
+    return this.request('/tasks');
+  }
+
   // 获取任务状态
   async getTaskStatus(taskId) {
     return this.request(`/status/${taskId}`);

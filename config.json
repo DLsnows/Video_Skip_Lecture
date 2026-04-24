@@ -7,12 +7,12 @@
   "ocr_provider": {
     "base_url": "https://api.deepinfra.com/v1/openai",
     "api_key": "",
-    "model": "deepseek-ai/DeepSeek-OCR"
+    "model": "Qwen/Qwen3-VL-30B-A3B-Instruct"
   },
   "summarization_provider": {
     "base_url": "https://api.deepseek.com",
     "api_key": "",
-    "model": "deepseek-reasoner"
+    "model": "deepseek-v4-pro"
   },
   "folders": {
     "default_input": "",

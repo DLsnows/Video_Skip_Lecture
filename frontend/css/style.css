@@ -52,7 +52,7 @@ body {
 .nav-brand {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--accent-color);
+  color: #ffffff;
 }
 
 .nav-links {

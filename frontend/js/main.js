@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 页面加载时获取默认设置填充表单
   initializeForm();
+  // 恢复之前未完成的任务状态
+  restoreTasksFromBackend();
 
   // 表单提交事件
   processForm.addEventListener('submit', async (e) => {
@@ -57,6 +59,47 @@ document.addEventListener('DOMContentLoaded', () => {
       disableForm(false);
     }
   });
+
+  // 页面加载时从后端恢复未完成的任务
+  async function restoreTasksFromBackend() {
+    try {
+      const allTasks = await apiClient.getAllTasks();
+      if (!allTasks || Object.keys(allTasks).length === 0) {
+        return;
+      }
+
+      for (const [taskId, taskData] of Object.entries(allTasks)) {
+        // 跳过主协调任务
+        if (isCoordinatorTask(taskData)) {
+          continue;
+        }
+
+        if (taskData.status === 'initialized' || taskData.status === 'processing') {
+          // 恢复为活跃任务并重连WebSocket
+          activeTasks.set(taskId, taskData);
+          connectToWebSocket(taskId);
+        } else if (taskData.status === 'completed' || taskData.status === 'failed') {
+          // 恢复到历史记录，保留原始完成时间
+          taskData.timestamp = taskData.updated_at || taskData.created_at || new Date().toISOString();
+          addToTaskHistory(taskData, true);
+        }
+      }
+
+      updateAllActiveTasksDisplay();
+    } catch (error) {
+      console.warn('恢复任务状态失败:', error);
+    }
+  }
+
+  function isCoordinatorTask(taskData) {
+    if (!taskData.current_step) return false;
+    return taskData.current_step.includes("Coordinated") ||
+           taskData.current_step.includes("Delegating") ||
+           taskData.current_step.includes("Monitoring") ||
+           taskData.current_step.includes("Processing:") ||
+           taskData.current_step.includes("Processing :") ||
+           (taskData.current_step.includes("Completed") && taskData.current_step.includes("individual tasks"));
+  }
 
   // 监听个体任务的创建
   async function listenForIndividualTasks(masterTaskId) {
@@ -260,9 +303,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 添加到任务历史
-  function addToTaskHistory(taskData) {
-    // 添加时间戳
-    taskData.timestamp = new Date().toISOString();
+  function addToTaskHistory(taskData, preserveTimestamp = false) {
+    // 添加时间戳，恢复时保留原始时间
+    if (!preserveTimestamp) {
+      taskData.timestamp = new Date().toISOString();
+    }
 
     // 防止重复添加
     const existingIndex = taskHistory.findIndex(task => task.task_id === taskData.task_id);

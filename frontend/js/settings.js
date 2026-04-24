@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const summarizationBaseUrlInput = document.getElementById('summarization-base-url');
   const summarizationApiKeyInput = document.getElementById('summarization-api-key');
   const summarizationModelInput = document.getElementById('summarization-model');
-  const defaultInputFolderInput = document.getElementById('default-input-folder');
-  const defaultOutputFolderInput = document.getElementById('default-output-folder');
   const loadDefaultSettingsBtn = document.getElementById('load-default-settings');
 
   // 页面加载时获取当前设置
@@ -39,10 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
           base_url: summarizationBaseUrlInput.value,
           api_key: summarizationApiKeyInput.value,
           model: summarizationModelInput.value
-        },
-        folders: {
-          default_input: defaultInputFolderInput.value,
-          default_output: defaultOutputFolderInput.value
         }
       };
 
@@ -111,12 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
       summarizationBaseUrlInput.value = settings.summarization_provider.base_url || '';
       summarizationApiKeyInput.value = settings.summarization_provider.api_key || '';
       summarizationModelInput.value = settings.summarization_provider.model || '';
-    }
-
-    // 填充文件夹设置
-    if (settings.folders) {
-      defaultInputFolderInput.value = settings.folders.default_input || '';
-      defaultOutputFolderInput.value = settings.folders.default_output || '';
     }
   }
 
