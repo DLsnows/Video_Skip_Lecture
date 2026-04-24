@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置 - 视频处理平台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-brand">视频处理平台</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">主页</a>
+                <a href="settings.html" class="nav-link active">设置</a>
+            </div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <h1>系统设置</h1>
+
+            <!-- API提供商设置 -->
+            <div class="card">
+                <h2>API提供商配置</h2>
+
+                <form id="settings-form">
+                    <!-- 转录提供商 -->
+                    <div class="provider-section">
+                        <h3>转录提供商</h3>
+                        <div class="form-group">
+                            <label for="transcription-base-url">Base URL:</label>
+                            <input type="text" id="transcription-base-url" placeholder="https://api.example.com/v1/openai">
+                        </div>
+                        <div class="form-group">
+                            <label for="transcription-api-key">API密钥:</label>
+                            <input type="password" id="transcription-api-key" placeholder="输入API密钥">
+                        </div>
+                        <div class="form-group">
+                            <label for="transcription-model">模型:</label>
+                            <input type="text" id="transcription-model" placeholder="whisper-large-v3">
+                        </div>
+                    </div>
+
+                    <!-- OCR提供商 -->
+                    <div class="provider-section">
+                        <h3>OCR提供商</h3>
+                        <div class="form-group">
+                            <label for="ocr-base-url">Base URL:</label>
+                            <input type="text" id="ocr-base-url" placeholder="https://api.example.com/v1/openai">
+                        </div>
+                        <div class="form-group">
+                            <label for="ocr-api-key">API密钥:</label>
+                            <input type="password" id="ocr-api-key" placeholder="输入API密钥">
+                        </div>
+                        <div class="form-group">
+                            <label for="ocr-model">模型:</label>
+                            <input type="text" id="ocr-model" placeholder="deepseek-ai/DeepSeek-OCR">
+                        </div>
+                    </div>
+
+                    <!-- 摘要化提供商 -->
+                    <div class="provider-section">
+                        <h3>摘要化提供商</h3>
+                        <div class="form-group">
+                            <label for="summarization-base-url">Base URL:</label>
+                            <input type="text" id="summarization-base-url" placeholder="https://api.example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="summarization-api-key">API密钥:</label>
+                            <input type="password" id="summarization-api-key" placeholder="输入API密钥">
+                        </div>
+                        <div class="form-group">
+                            <label for="summarization-model">模型:</label>
+                            <input type="text" id="summarization-model" placeholder="deepseek-reasoner">
+                        </div>
+                    </div>
+
+                    <!-- 文件夹设置 -->
+                    <div class="folder-section">
+                        <h3>文件夹设置</h3>
+                        <div class="form-group">
+                            <label for="default-input-folder">默认输入文件夹:</label>
+                            <input type="text" id="default-input-folder" placeholder="例如: /path/to/default/input">
+                        </div>
+                        <div class="form-group">
+                            <label for="default-output-folder">默认输出文件夹:</label>
+                            <input type="text" id="default-output-folder" placeholder="例如: /path/to/default/output">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">保存设置</button>
+                    <button type="button" id="load-default-settings" class="btn btn-secondary">加载默认设置</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

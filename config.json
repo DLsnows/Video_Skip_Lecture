@@ -1,0 +1,21 @@
+{
+  "transcription_provider": {
+    "base_url": "https://api.deepinfra.com/v1/openai",
+    "api_key": "",
+    "model": "openai/whisper-large-v3"
+  },
+  "ocr_provider": {
+    "base_url": "https://api.deepinfra.com/v1/openai",
+    "api_key": "",
+    "model": "deepseek-ai/DeepSeek-OCR"
+  },
+  "summarization_provider": {
+    "base_url": "https://api.deepseek.com",
+    "api_key": "",
+    "model": "deepseek-reasoner"
+  },
+  "folders": {
+    "default_input": "",
+    "default_output": ""
+  }
+}

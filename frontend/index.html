@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频处理平台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-brand">视频处理平台</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">主页</a>
+                <a href="settings.html" class="nav-link">设置</a>
+            </div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 任务提交表单 -->
+            <div class="card">
+                <h2>开始新的视频处理任务</h2>
+                <form id="process-form">
+                    <div class="form-group">
+                        <label for="input-folder">输入文件夹:</label>
+                        <input type="text" id="input-folder" placeholder="例如: /path/to/input/videos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="output-folder">输出文件夹:</label>
+                        <input type="text" id="output-folder" placeholder="例如: /path/to/output/results" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="language">视频语言:</label>
+                        <select id="language">
+                            <option value="en">英语 (English)</option>
+                            <option value="zh">中文 (Chinese)</option>
+                            <option value="ja">日语 (Japanese)</option>
+                            <option value="ko">韩语 (Korean)</option>
+                            <option value="fr">法语 (French)</option>
+                            <option value="de">德语 (German)</option>
+                            <option value="es">西班牙语 (Spanish)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">开始处理</button>
+                </form>
+            </div>
+
+            <!-- 当前任务进度 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>当前任务进度</h2>
+                    <div class="task-actions">
+                        <button id="refresh-status" class="btn btn-secondary">
+                            <span class="material-icons">refresh</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="current-task">
+                    <p class="no-task-message">没有正在进行的任务</p>
+                </div>
+            </div>
+
+            <!-- 任务历史 -->
+            <div class="card">
+                <h2>任务历史</h2>
+                <div id="task-history">
+                    <p class="no-tasks-message">暂无任务历史</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

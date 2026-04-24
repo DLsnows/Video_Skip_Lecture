@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x start.sh)",
+      "Bash(python main.py)",
+      "Bash(python -c \"import sys; print\\('Server ready to run'\\)\")",
+      "Bash(python test_multi_video_fixed.py)"
+    ]
+  }
+}
